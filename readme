@@ -1,0 +1,21 @@
+--> Create a postgress pod - done 
+   |
+   -> create a postgress service - done
+   -> verify pod is healthy - done
+   -> verify able to connect to database on port 5432 - done
+--> Create configmap to load in a volume for airflow.cfg and all init.sh files.   
+--> Create the initiation pod
+   |
+   -> verify pod is healthy 
+   -> verify able to run init.sh to initiate database
+--> Create the scheduler pod 
+   |
+   -> verify pod is healthy
+   -> verify able to run the airflow cli 
+--> Create the webserver pod 
+   |
+   -> verify pod is healthy
+   -> create webserver service
+   -> verify able to access the webserver on port 8080  
+
+

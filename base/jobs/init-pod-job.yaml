@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: airflow-init-job-pod
+  namespace: local-dev
+spec:
+  template:
+    metadata:
+      labels:
+        component: scheduler
+    spec:
+      containers:
+      - name: airflow-init-job-pod
+        image: apache/airflow:2.3.0
+        command: ["/bin/bash", "/opt/airflow/init_airflow.sh"]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /opt/airflow/airflow.cfg
+          subPath: airflow.cfg
+        - name: config-volume
+          mountPath: /opt/airflow/init_airflow.sh
+          subPath: init_airflow.sh
+      volumes:
+      - name: config-volume
+        configMap:
+          name: airflow-config
+      restartPolicy: Never
+  backoffLimit: 0

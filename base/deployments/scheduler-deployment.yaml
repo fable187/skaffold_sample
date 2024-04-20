@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-scheduler
+  namespace: local-dev
+spec:
+  selector:
+    matchLabels:
+      component: scheduler
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: scheduler
+    spec:
+      containers:
+      - name: scheduler
+        image: apache/airflow:2.3.0
+        args: ["scheduler"]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /opt/airflow/airflow.cfg
+          subPath: airflow.cfg
+      volumes:
+      - name: config-volume
+        configMap:
+          name: airflow-config

@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2beta22
+kind: Config
+metadata:
+  name: airflow-deployment
+build:
+  artifacts:
+    - image: airflow
+      context: .
+      kaniko:
+        dockerfile: Dockerfile
+        tarPath: ./saved_images
+ 
+  cluster:
+    namespace: local-dev
+    pullSecretName: kaniko-secret
+    dockerConfig:
+      secretName: kaniko-secret
+ 
+# profiles:
+#   - name: dev
+#     deploy:
+#       kustomize:
+#         path: kustomize/overlays/dev

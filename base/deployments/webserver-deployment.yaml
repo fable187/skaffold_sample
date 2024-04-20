@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-webserver
+  namespace: local-dev
+spec:
+  selector:
+    matchLabels:
+      component: webserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: webserver
+    spec:
+      containers:
+      - name: webserver
+        image: apache/airflow:2.3.0
+        args: ["webserver"]
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /opt/airflow/airflow.cfg
+          subPath: airflow.cfg
+      volumes:
+      - name: config-volume
+        configMap:
+          name: airflow-config

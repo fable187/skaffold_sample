@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: airflow-scheduler-rolebinding
+  namespace: local-dev
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: local-dev
+roleRef:
+  kind: Role
+  name: airflow-scheduler-role
+  apiGroup: rbac.authorization.k8s.io
